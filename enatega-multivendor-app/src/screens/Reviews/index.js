@@ -28,6 +28,8 @@ const Reviews = ({ navigation, route }) => {
   const restaurant = route.params.restaurantObject
   const { reviews } = restaurant
   const reviewGroups = groupAndCount(reviews, 'rating')
+  // Calculate total reviews from the reviews array for accurate percentage calculation
+  const totalReviewsCount = Array.isArray(reviews) ? reviews.length : 0
   const [sortBy, setSortBy] = useState('newest')
   const sortingParams = {
     newest: t('Newest'),
@@ -98,7 +100,7 @@ const Reviews = ({ navigation, route }) => {
             {Object.keys(reviewGroups)
               .sort((a, b) => b - a)
               .map((i, index) => {
-                const filled = (reviewGroups[i] / restaurant.total) * 100
+                const filled = totalReviewsCount > 0 ? (reviewGroups[i] / totalReviewsCount) * 100 : 0
                 const unfilled = filled ? 100 - filled : 100
                 return (
                   <View
