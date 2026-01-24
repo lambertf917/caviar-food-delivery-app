@@ -88,6 +88,10 @@ function RateAndReview(props) {
   }
 
   function onSubmit() {
+    // Prevent multiple submissions while mutation is in progress
+    if (loadingMutation) {
+      return
+    }
     if (rating > 0 && rating < 6) {
       mutate({
         variables: {
