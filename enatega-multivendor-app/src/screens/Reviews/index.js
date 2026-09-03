@@ -85,7 +85,7 @@ const Reviews = ({ navigation, route }) => {
             }}
           >
             <TextDefault bold H3 textColor={currentTheme.newFontcolor}>
-              {t('allRatings')} ({restaurant.total})
+              {t('allRatings')} ({reviews.length})
             </TextDefault>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <StarRating />
@@ -98,7 +98,9 @@ const Reviews = ({ navigation, route }) => {
             {Object.keys(reviewGroups)
               .sort((a, b) => b - a)
               .map((i, index) => {
-                const filled = (reviewGroups[i] / restaurant.total) * 100
+                const filled = reviews.length
+                  ? (reviewGroups[i] / reviews.length) * 100
+                  : 0
                 const unfilled = filled ? 100 - filled : 100
                 return (
                   <View
